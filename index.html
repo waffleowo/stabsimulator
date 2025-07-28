@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>techtok ahhhh Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #2a2a2a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #e0e0e0;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>techtok ahhhh Test</title
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+            color: #b0b0b0;
+        }
+
+        .phone-container {
+            perspective: 1000px;
+            margin: 2rem 0;
+        }
+
+        .phone {
+            width: 200px;
+            height: 400px;
+            position: relative;
+            margin: 0 auto;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+            transform-origin: 60px 60px; /* Center rotation around lens position */
+        }
+
+        .phone-body {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #4b4b4b, #1a1a1a);
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            position: relative;
+            border: 3px solid #0a0a0a;
+        }
+
+        .screen {
+            width: 170px;
+            height: 300px;
+            background: #0a0a0a;
+            border-radius: 15px;
+            position: absolute;
+            top: 50px;
+            left: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #888;
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #333;
+        }
+
+        .camera-module {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, #0a0a0a, #2a2a2a);
+            border-radius: 20px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .angle-display {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-top: 0.5rem;
+        }
+
+        /* Generic camera styles */
+        .generic-camera .camera-lens {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #4a4a4a, #2a2a2a, #1a1a1a);
+            border-radius: 50%;
+            position: relative;
+            border: 3px solid #333;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+            transition: transform 0.1s ease-out;
+            transform-origin: center center;
+        }
+
+        .camera-lens::before {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1), transparent);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .camera-lens::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(45deg, #1a1a1a, #0a0a0a);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .lens-marker {
+            position: absolute;
+            width: 4px;
+            height: 20px;
+            background: #666;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .control-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ccc;
+        }
+
+        .slider {
+            width: 300px;
+            height: 8px;
+            border-radius: 4px;
+            background: #333;
+            outline: none;
+            -webkit-appearance: none;
+            border: 1px solid #555;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #666, #444);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+            border: 2px solid #888;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #666, #444);
+            cursor: pointer;
+            border: 2px solid #888;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .4s;
+            border-radius: 30px;
+            border: 1px solid #555;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 3px;
+            background-color: #666;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #555;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+            background-color: #888;
+        }
+
+        .info-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            min-width: 200px;
+            border: 1px solid #333;
+        }
+
+        .value-display {
+            font-weight: bold;
+            color: #aaa;
+        }
+
+        .model-selector {
+            margin-bottom: 2rem;
+        }
+
+        .model-dropdown {
+            background: #333;
+            color: #fff;
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 8px 12px;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            cursor: pointer;
+        }
+
+        .model-dropdown:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        /* OnePlus 13 specific styles */
+        .oneplus13 .phone-body {
+            background: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAGQAMgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP//Z') no-repeat center center;
+            background-size: cover;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            position: relative;
+            border: 3px solid #1a252f;
+            overflow: hidden;
+        }
+
+        .oneplus13 .phone-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.1);
+            border-radius: 22px;
+        }
+
+        .oneplus13 .camera-module {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: transparent;
+            border-radius: 60px;
+            top: 30px;
+            left: 40px;
+            box-shadow: none;
+            border: none;
+        }
+
+        .oneplus13 .camera-lenses {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .oneplus13 .main-lens {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            background: radial-gradient(circle, #1a1a1a, #000);
+            border-radius: 50%;
+            border: 2px solid #333;
+            top: 15px;
+            left: 15px;
+            transition: transform 0.1s ease-out;
+            transform-origin: center center;
+        }
+
+        .oneplus13 .secondary-lens {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            background: radial-gradient(circle, #1a1a1a, #000);
+            border-radius: 50%;
+            border: 2px solid #333;
+            top: 15px;
+            right: 15px;
+        }
+
+        .oneplus13 .tertiary-lens {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            background: radial-gradient(circle, #1a1a1a, #000);
+            border-radius: 50%;
+            border: 2px solid #333;
+            bottom: 15px;
+            left: 15px;
+        }
+
+        .oneplus13 .flash {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: radial-gradient(circle, #f0f0f0, #d0d0d0);
+            border-radius: 50%;
+            border: 1px solid #bbb;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .oneplus13 .screen {
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(2px);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .controls { flex-direction: column; gap: 1rem; }
+            .slider { width: 250px; }
+            .info-panel { position: relative; top: auto; right: auto; margin-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stabilization Simulator</h1>
+        <p class="subtitle">Rotate the Z-axis and watch the camera lens stabilize</p>
+        
+        <div class="phone-container">
+            <div class="phone" id="phone">
+                <div class="phone-body">
+                    <!--<div class="screen">
+                        <div>
+                            generic<br>
+                        </div>
+                    </div>-->
+                    <div class="camera-module" id="cameraModule">
+                        <div class="camera-lenses generic-camera">
+                            <div class="camera-lens" id="cameraLens">
+                                <!--<div class="lens-marker"></div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="model-selector">
+            <div class="control-label">Phone Model</div>
+            <select id="phoneModel" class="model-dropdown">
+                <option value="generic">Generic Phone</option>
+                <option value="generic" selected>generic</option>
+            </select>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <div class="control-label">Z-Axis Rotation</div>
+                <input type="range" class="slider" id="rotateZ" min="-180" max="180" value="0">
+                <div class="angle-display" id="rotateZValue">0°</div>
+            </div>
+        </div>
+
+        <div class="toggle-container">
+            <span>Camera Stabilization:</span>
+            <label class="toggle">
+                <input type="checkbox" id="stabilizationToggle" checked>
+                <span class="toggle-slider"></span>
+            </label>
+            <span id="stabilizationStatus">ON</span>
+        </div>
+    </div>
+
+    <div class="info-panel">
+        <h3>Stabilization Data</h3>
+        <div>Phone Z-Rotation: <span class="value-display" id="phoneRotation">0°</span></div>
+        <div>Lens Rotation: <span class="value-display" id="lensRotation">0°</span></div>
+        <div>Stabilization: <span class="value-display" id="stabStatus">ACTIVE</span></div>
+        <div style="margin-top: 1rem; font-size: 0.8rem; color: #888;">
+            Use arrow keys or drag slider
+        </div>
+    </div>
+
+    <script>
+        const phone = document.getElementById('phone');
+        const cameraLens = document.getElementById('cameraLens');
+        const cameraModule = document.getElementById('cameraModule');
+        const rotateZSlider = document.getElementById('rotateZ');
+        const stabilizationToggle = document.getElementById('stabilizationToggle');
+        const phoneModel = document.getElementById('phoneModel');
+        
+        // Value displays
+        const rotateZValue = document.getElementById('rotateZValue');
+        const stabilizationStatus = document.getElementById('stabilizationStatus');
+        const phoneRotation = document.getElementById('phoneRotation');
+        const lensRotation = document.getElementById('lensRotation');
+        const stabStatus = document.getElementById('stabStatus');
+
+        let currentZRotation = 0;
+        let stabilizationEnabled = true;
+
+        function updatePhoneModel() {
+            const selectedModel = phoneModel.value;
+            phone.className = 'phone ' + selectedModel;
+            
+            // Update camera module content based on model
+            const cameraLensesDiv = cameraModule.querySelector('.camera-lenses');
+            
+            if (selectedModel === 'oneplus13') {
+                cameraLensesDiv.innerHTML = `
+                    <div class="main-lens" id="cameraLens"></div>
+                    <div class="secondary-lens"></div>
+                    <div class="tertiary-lens"></div>
+                    <div class="flash"></div>
+                `;
+                cameraLensesDiv.className = 'camera-lenses oneplus13-camera';
+                
+                // Add text elements to phone body
+                const phoneBody = phone.querySelector('.phone-body');
+                if (!phoneBody.querySelector('.hasselblad-text')) {
+                    phoneBody.innerHTML += '<div class="hasselblad-text">H</div>';
+                    phoneBody.innerHTML += '<div class="oneplus-logo">1+</div>';
+                }
+                
+                // Update transform origin for OnePlus 13
+                phone.style.transformOrigin = '100px 90px';
+            } else {
+                cameraLensesDiv.innerHTML = `
+                    <div class="camera-lens" id="cameraLens">
+                        <div class="lens-marker"></div>
+                    </div>
+                `;
+                cameraLensesDiv.className = 'camera-lenses generic-camera';
+                
+                // Remove OnePlus specific elements
+                const phoneBody = phone.querySelector('.phone-body');
+                const hasselbladText = phoneBody.querySelector('.hasselblad-text');
+                const oneplusLogo = phoneBody.querySelector('.oneplus-logo');
+                if (hasselbladText) hasselbladText.remove();
+                if (oneplusLogo) oneplusLogo.remove();
+                
+                // Reset transform origin for generic
+                phone.style.transformOrigin = '60px 60px';
+            }
+            
+            // Re-get camera lens reference after DOM update
+            window.cameraLens = document.getElementById('cameraLens');
+        }
+
+        function updateRotation() {
+            const rotZ = parseInt(rotateZSlider.value);
+            currentZRotation = rotZ;
+            
+            // Rotate the entire phone
+            phone.style.transform = `rotateZ(${rotZ}deg)`;
+            
+            // Apply counter-rotation to camera lens for stabilization
+            if (stabilizationEnabled) {
+                // Counter-rotate the lens to keep it stable
+                if (window.cameraLens) {
+                    window.cameraLens.style.transform = `rotate(${-rotZ}deg)`;
+                }
+                lensRotation.textContent = `${-rotZ}°`;
+            } else {
+                // Lens rotates with the phone (no stabilization)
+                if (window.cameraLens) {
+                    window.cameraLens.style.transform = `rotate(0deg)`;
+                }
+                lensRotation.textContent = `${rotZ}°`;
+            }
+            
+            // Update displays
+            rotateZValue.textContent = `${rotZ}°`;
+            phoneRotation.textContent = `${rotZ}°`;
+        }
+
+        function toggleStabilization() {
+            stabilizationEnabled = stabilizationToggle.checked;
+            stabilizationStatus.textContent = stabilizationEnabled ? 'ON' : 'OFF';
+            stabStatus.textContent = stabilizationEnabled ? 'ACTIVE' : 'DISABLED';
+            updateRotation();
+        }
+
+        // Event listeners
+        rotateZSlider.addEventListener('input', updateRotation);
+        stabilizationToggle.addEventListener('change', toggleStabilization);
+        phoneModel.addEventListener('change', updatePhoneModel);
+
+        // Auto-rotation demo
+        let autoRotate = false;
+        let animationId;
+        
+        function startAutoRotation() {
+            let time = 0;
+            function animate() {
+                if (autoRotate) {
+                    time += 0.03;
+                    rotateZSlider.value = Math.sin(time) * 90;
+                    updateRotation();
+                    animationId = requestAnimationFrame(animate);
+                }
+            }
+            animate();
+        }
+
+        // Add keyboard controls
+        document.addEventListener('keydown', (e) => {
+            const step = 5;
+            switch(e.key) {
+                case 'ArrowLeft':
+                    rotateZSlider.value = Math.max(-180, parseInt(rotateZSlider.value) - step);
+                    break;
+                case 'ArrowRight':
+                    rotateZSlider.value = Math.min(180, parseInt(rotateZSlider.value) + step);
+                    break;
+                case ' ':
+                    e.preventDefault();
+                    autoRotate = !autoRotate;
+                    if (autoRotate) {
+                        startAutoRotation();
+                    } else {
+                        cancelAnimationFrame(animationId);
+                    }
+                    break;
+                case 'r':
+                case 'R':
+                    rotateZSlider.value = 0;
+                    updateRotation();
+                    break;
+                case 's':
+                case 'S':
+                    stabilizationToggle.checked = !stabilizationToggle.checked;
+                    toggleStabilization();
+                    break;
+            }
+            updateRotation();
+        });
+
+        // Initialize
+        updatePhoneModel();
+        updateRotation();
+
+        // Add visual feedback for stabilization status
+        setInterval(() => {
+            if (stabilizationEnabled && window.cameraLens) {
+                window.cameraLens.style.boxShadow = '0 4px 8px rgba(0,0,0,0.6), 0 0 10px rgba(136, 136, 136, 0.2)';
+            } else if (window.cameraLens) {
+                window.cameraLens.style.boxShadow = '0 4px 8px rgba(0,0,0,0.6)';
+            }
+        }, 100);
+    </script>
+</body>
+</html>
